@@ -1,0 +1,20 @@
+# --- Virtual environments ---
+.venv/
+venv/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# --- VSCode ---
+.vscode/
+*.code-workspace
+
+# --- Checkpoints
+*.pth
+
+# --- Data ---
+data/

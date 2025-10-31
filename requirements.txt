@@ -1,0 +1,9 @@
+sentence-transformers>=2.0.0
+transformers>=4.41.0
+torch>=2.0.0
+torchvision>=0.15.0
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
