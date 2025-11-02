@@ -19,12 +19,10 @@ def main():
     
     train_loader = create_dataloader(text_embeddings, image_embeddings, batch_size=64)
     
-    # Simple 2-layer MLP with maximum semantic expansion
+    # Single-layer MLP with optimal parameters
     mlp = nn.Sequential(
-        nn.Linear(1024, 4096),    # Massive expansion for rich text semantics
-        nn.ReLU(),
-        nn.Dropout(0.2),          # Higher dropout due to large layer
-        nn.Linear(4096, 1536)     # Direct mapping to image space
+        nn.Linear(1024, 1536),      # Direct linear mapping from text to image space
+        nn.Dropout(0.1)             # Light regularization for single layer
     )
     
     class CosineSimilarityLoss(nn.Module):
@@ -36,10 +34,10 @@ def main():
             return 1 - self.cosine_sim(pred, target).mean()
     
     loss_function = CosineSimilarityLoss()
-    optimizer = torch.optim.Adam(mlp.parameters(), lr=0.001)
+    optimizer = torch.optim.Adam(mlp.parameters(), lr=0.003, weight_decay=1e-4)
     
-    # Training parameters (increased due to dropout regularization)
-    num_epochs = 20  # Augmenté de 10 à 20 époques avec la régularisation
+    # Training parameters optimized for single layer
+    num_epochs = 15  # Fewer epochs needed for single layer convergence
     mlp.to(device)
     loss_function.to(device)
     
@@ -72,7 +70,7 @@ def main():
         print(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.6f}")
         
         # Save model checkpoint every 5 epochs
-        if (epoch + 1) % 5 == 0:
+        if (epoch + 1) % 10 == 0:
             torch.save({
                 'epoch': epoch + 1,
                 'model_state_dict': mlp.state_dict(),
@@ -155,7 +153,7 @@ def main():
     
     # Create DataFrame and save to CSV
     submission_df = pd.DataFrame(submission_data)
-    submission_df.to_csv('submission7.csv', index=False, quoting=0)  # quoting=0 removes quotes around arrays
+    submission_df.to_csv('submission.csv', index=False, quoting=0)  # quoting=0 removes quotes around arrays
     
     print(f"Submission saved with {len(submission_df)} rows")
     print(f"Sample submission format:")

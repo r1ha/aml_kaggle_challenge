@@ -7,10 +7,8 @@ from PIL import Image
 import os
 
 mlp = nn.Sequential(
-        nn.Linear(1024, 4096),    # Massive expansion for rich text semantics
-        nn.ReLU(),
-        nn.Dropout(0.2),          # Higher dropout due to large layer
-        nn.Linear(4096, 1536)     # Direct mapping to image space
+        nn.Linear(1024, 1536),      # Direct linear mapping from text to image space
+        nn.Dropout(0.1)             # Light regularization for single layer
     )
 
 # Load the trained model
