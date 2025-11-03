@@ -19,10 +19,12 @@ def main():
     
     train_loader = create_dataloader(text_embeddings, image_embeddings, batch_size=64)
     
-    # Single-layer MLP with optimal parameters
+    # MLP with optimal dropout and L2-normalized initialization
     mlp = nn.Sequential(
-        nn.Linear(1024, 1536),      # Direct linear mapping from text to image space
-        nn.Dropout(0.1)             # Light regularization for single layer
+        nn.Linear(1024, 2048),      # Direct linear mapping from text to image space
+        nn.GELU(),                  # Activation function for non-linearity
+        nn.Dropout(0.2),            # Higher dropout for better regularization
+        nn.Linear(2048, 1536)
     )
     
     class CosineSimilarityLoss(nn.Module):
@@ -37,7 +39,7 @@ def main():
     optimizer = torch.optim.Adam(mlp.parameters(), lr=0.003, weight_decay=1e-4)
     
     # Training parameters optimized for single layer
-    num_epochs = 15  # Fewer epochs needed for single layer convergence
+    num_epochs = 25  # Fewer epochs needed for single layer convergence
     mlp.to(device)
     loss_function.to(device)
     
