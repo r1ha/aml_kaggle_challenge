@@ -40,7 +40,7 @@ def main():
     optimizer = torch.optim.Adam(mlp.parameters(), lr=0.001, weight_decay=1e-4)
     
     # Training parameters optimized for two-layer architecture
-    num_epochs = 15  # Adjusted for two-layer convergence
+    num_epochs = 20  # Adjusted for two-layer convergence
     mlp.to(device)
     loss_function.to(device)
     
