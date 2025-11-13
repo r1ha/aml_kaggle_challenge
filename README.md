@@ -108,9 +108,22 @@ The script for the **baseline model (Model 1)**.
 python src/pipeline.py
 ```
 
+**What it does:**
+1. **Training Phase**: 
+   - Loads training data directly to GPU
+   - Trains the MLP for 20 epochs with cosine similarity loss
+   - Saves model checkpoints every 5 epochs
+   - Saves final model as `pipeline_final_model.pth`
+
+2. **Testing Phase**:
+   - Loads test data and generates predictions
+   - Performs batch inference with GPU optimization
+   - Evaluates model performance on training subset
+   - Creates submission file `pipeline_submission.csv`
+
 ### Verification Script (`src/verif.py`)
 
-A detailed analysis and visualization tool for evaluating model performance.
+Analysis and visualization tool for evaluating model performance.
 
 ```bash
 python src/verif.py
