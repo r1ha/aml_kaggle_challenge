@@ -126,8 +126,8 @@ python src/verif.py
 ## 🗂️ Project Structure
 
 ```
-├── residual_model.ipynb        # Main notebook for final model
 ├── src/
+|   ├── residual_model.ipynb    # Notebook for final model
 │   ├── dataset_loader.py       # Data loading utilities
 │   ├── pipeline.py             # Main script for baseline model
 │   ├── test.py                 # Legacy test script
